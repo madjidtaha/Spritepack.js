@@ -33,43 +33,6 @@ window.Spritepack = (function() {
 		
 	}
 
-	function b64encodeString(value)
-	{
-		var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
-		chars = chars.split('');
-		var l = value.length;
-		var i = 0;
-		var cb = b = 0;
-		var bl = 0;
-		var v = 0;
-		var b0, b1, b2;
-		var c0, c1, c2, c3;
-		var ret = '';
-		while(i < l)
-		{
-			b0 = value.charCodeAt(i + 0) & 0xFF;
-			b1 = value.charCodeAt(i + 1) & 0xFF;
-			b2 = value.charCodeAt(i + 2) & 0xFF;
-			c0 = b0 >> 2 & 0x3F;
-			c1 = (b0 << 4 | b1 >> 4) & 0x3F;
-			c2 = (b1 << 2 | b2 >> 6) & 0x3F;
-			c3 = b2 & 0x3F;
-
-			ret += chars[c0] + chars[c1] + chars[c2] + chars[c3];
-			i += 3;
-		}
-
-		i = l % 3;
-		l = ret.length;
-		if(i == 1)
-		{
-			ret = ret.substr(0, l - 2) + "=="
-		}else if(i == 2)
-		{
-			ret = ret.substr(0, l - 1) + "="
-		}
-		return ret;
-	}
 	function req()
 	{
 		if(window.XMLHttpRequest) return new XMLHttpRequest()
@@ -175,26 +138,19 @@ window.Spritepack = (function() {
 
 	Spritepack.prototype._getRange = function(i, e, type)
 	{
-		if (!Spritepack.hasBlob) {
-			if (Spritepack.isIE)
-			{
-				return 'data:' + type + ';base64,' + b64encodeString(this.ieBlob.substr(i, e - i));
-			}
-		} else {
-			var b;
-			if(this.blob.slice)
-			{
-				b = this.blob.slice(i, e, type);
-				return window.URL.createObjectURL(b);
-			}else if (this.blob.webkitSlice)
-			{
-				b = this.blob.webkitSlice(i, e, type);
-				return window.URL.createObjectURL(b);
-			}else if(this.blob.mozSlice)
-			{
-				b = this.blob.mozSlice(i, e, type);
-				return window.URL.createObjectURL(b);
-			}
+		var b;
+		if(this.blob.slice)
+		{
+			b = this.blob.slice(i, e, type);
+			return window.URL.createObjectURL(b);
+		}else if (this.blob.webkitSlice)
+		{
+			b = this.blob.webkitSlice(i, e, type);
+			return window.URL.createObjectURL(b);
+		}else if(this.blob.mozSlice)
+		{
+			b = this.blob.mozSlice(i, e, type);
+			return window.URL.createObjectURL(b);
 		}
 	}
 
