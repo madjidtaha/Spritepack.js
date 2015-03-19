@@ -1,7 +1,8 @@
-Magipack.js
+Spritepack.js
 ===========
 
-[Magipack.js](https://github.com/keitakun/Magipack.js) is a Javascript code that will help minimize HTTP requests.
+[Spritepack.js](https://github.com/madjidtaha/Spritepack.js) is a Javascript code that will help minimize HTTP requests.
+Spritepack.js is a fork of [Magipack.js](https://github.com/keitakun/Magipack.js)
 
 One of the issues on HTTP load time usually are the number of requests and the preferred method to minimize HTTP requests are generating image [Spritesheets](https://www.google.com/search?q=spritesheet&oq=spritesheet&aqs=chrome..69i57j69i59j69i60.1687j0j7&sourceid=chrome&espv=210&es_sm=91&ie=UTF-8).
 
@@ -12,7 +13,7 @@ Though, using Spritesheets you end up with some other issues such:
 * Hard to use Spritesheets in *IMG* elements
 * Needs repositioning *background-position* in CSS when Spritesheets changes
 
-### So what [Magipack.js](https://github.com/keitakun/Magipack.js) does better than Spritesheets?
+### So what [Spritepack.js](https://github.com/madjidtaha/Spritepack.js) does better than Spritesheets?
 It loads a single file which is a concatenation of binary data of the files you want and a json file which maps the position and the size of each file.
 
 This way, you can pack up several images with different file formats in a single file without losing compression or metadatas.
@@ -22,11 +23,13 @@ The example files and a python script are in the [examples folder](https://githu
 
 Browser compatibility
 ---------------------
-This examples were tested in Chrome 32, IE7, IE8, IE9, IE10, Safari 7, Firefox 25, Safari iOS 7.
+This examples were tested in Chrome 32, IE10, Safari 7, Firefox 25, Safari iOS 7.
 
 Older versions of IE (7 and 8) don't support more than 32KB [data URI](http://msdn.microsoft.com/en-us/library/cc848897(v=vs.85).aspx). Modern browsers, however, use URL.createObjectURL which doesn't have any size limit.
 
-There wasn't any large scale testing for this project yet, so if you find any [issue, please report it](https://github.com/keitakun/Magipack.js/issues).
+Spritepack.js drop support of browser how don't support [blob](http://caniuse.com/#search=blob) (IE 9 and lower) 
+
+There wasn't any large scale testing for this project yet, so if you find any [issue, please report it](https://github.com/madjidtaha/Spritepack.js/issues).
 
 
 
