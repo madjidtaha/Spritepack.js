@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 <script src="//cdnjs.cloudflare.com/ajax/libs/PreloadJS/0.4.1/preloadjs.min.js"></script>
-<script src='../src/Magipack.min.js'></script>
+<script src='../src/Spritepack.js'></script>
 <script>
 
 
@@ -14,11 +14,11 @@ queue.loadManifest([
 	{id: "config", src:"images.json"},
 ]);
 function handleComplete() {
-	var mp = new Magipack(queue.getResult('image'), queue.getResult('config'));
-	document.getElementById("i1").src = mp.getURI('forkit.gif');
-	document.getElementById("i2").src = mp.getURI('mario.jpg');
-	document.getElementById("i3").src = mp.getURI('Smile.png');
-	document.getElementById("container").style.backgroundImage = 'url(' + mp.getURI('packman_ghost.gif') + ')';
+	var sp = new Spritepack(queue.getResult('image'), queue.getResult('config'));
+	document.getElementById("i1").src = sp.getURI('forkit.gif');
+	document.getElementById("i2").src = sp.getURI('mario.jpg');
+	document.getElementById("i3").src = sp.getURI('Smile.png');
+	document.getElementById("container").style.backgroundImage = 'url(' + sp.getURI('packman_ghost.gif') + ')';
 }
 </script>
 <style>
@@ -34,7 +34,7 @@ img
 </style>
 </head>
 <body>
-	<h1>Magipack Static usage.</h1>
+	<h1>Spritepack Static usage.</h1>
 	<div id="container">
 		<img id="i1" />
 		<img id="i2" />

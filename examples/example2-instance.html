@@ -2,18 +2,18 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<script src='../src/Magipack.min.js'></script>
+<script src='../src/Spritepack.js'></script>
 <script>
-var mp = new Magipack();
-mp.onLoadComplete = function()
+var sp = new Spritepack();
+sp.onLoadComplete = function()
 {
 	// Here you can use either the instance you created or `this` scope.
 	document.getElementById("i1").src = this.getURI('forkit.gif');
-	document.getElementById("i2").src = mp.getURI('mario.jpg');
-	document.getElementById("i3").src = mp.getURI('Smile.png');
-	document.getElementById("container").style.backgroundImage = 'url(' + mp.getURI('packman_ghost.gif') + ')';
+	document.getElementById("i2").src = sp.getURI('mario.jpg');
+	document.getElementById("i3").src = sp.getURI('Smile.png');
+	document.getElementById("container").style.backgroundImage = 'url(' + sp.getURI('packman_ghost.gif') + ')';
 }
-mp.load('images.pack', 'images.json');
+sp.load('images.pack', 'images.json');
 </script>
 <style>
 img
@@ -28,7 +28,7 @@ img
 </style>
 </head>
 <body>
-	<h1>Magipack Static usage.</h1>
+	<h1>Spritepack Static usage.</h1>
 	<div id="container">
 		<img id="i1" />
 		<img id="i2" />
