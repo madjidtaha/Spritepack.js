@@ -215,7 +215,7 @@
 		return this._instance.getURI.apply(this._instance, arguments);
 	}
 
-	/* global define:true module:true window: true */
+	/* global define:true module:true window:true */
 
 	if (typeof define === 'function' && define.amd) {
 	 	
@@ -231,7 +231,5 @@
 	
 	}
 
-
-	// return Spritepack;
 
 })(this);
