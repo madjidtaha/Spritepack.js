@@ -14,8 +14,7 @@
  * 
  **/
 
- 
-window.Spritepack = (function() {
+(function(global) {
 	window.URL = window.URL || window.webkitURL || window.mozURL || window.msURL;
 	Spritepack.isIE = Boolean(document.all);
 	var hasBlob = false;
@@ -26,7 +25,7 @@ window.Spritepack = (function() {
 		hasBlob = false;
 	}
 	Spritepack.hasBlob = hasBlob;
-	Spritepack.version = '0.1';
+	Spritepack.version = '1.0.0';
 	if(!Spritepack.hasBlob)
 	{
 		throw new Error('Spritepack need blob support to work.') 
@@ -36,7 +35,7 @@ window.Spritepack = (function() {
 	function req()
 	{
 		if(window.XMLHttpRequest) return new XMLHttpRequest()
-		if(window.ActiveXObject)return new ActiveXObject("MSXML2.XMLHTTP.3.0")
+		if(window.ActiveXObject) return new ActiveXObject("MSXML2.XMLHTTP.3.0")
 	}
 
 	function Spritepack(pack, config) {
@@ -106,12 +105,9 @@ window.Spritepack = (function() {
 
 	Spritepack.prototype._packLoaded = function(e)
 	{
-		if(!Spritepack.hasBlob)
-		{
-			this.init(e.responseBody, this.config);
-		}else{
-			this.init(e.response, this.config);
-		}
+		
+		this.init(e.response, this.config);
+
 		if(this.onLoadComplete)
 		{
 			this.onLoadComplete(this);
@@ -159,12 +155,9 @@ window.Spritepack = (function() {
 		this.config = config;
 		if(pack != null)
 		{
-			if(!Spritepack.hasBlob)
-			{
-				this.ieBlob = GetIEByteArray_ByteStr(pack);
-			}else{
-				this.blob = new Blob([pack])
-			}
+		
+			this.blob = new Blob([pack])
+			
 		}
 	}
 
@@ -222,6 +215,23 @@ window.Spritepack = (function() {
 		return this._instance.getURI.apply(this._instance, arguments);
 	}
 
-	return Spritepack;
+	/* global define:true module:true window: true */
 
-})();
+	if (typeof define === 'function' && define.amd) {
+	 	
+	 	define(function() { return Spritepack; });
+	
+	} else if (typeof module !== 'undefined' && module.exports) {
+	
+		module.exports = Spritepack;
+	
+	} else if (typeof this !== 'undefined') {
+	  
+	  	global.Spritepack = Spritepack;
+	
+	}
+
+
+	// return Spritepack;
+
+})(this);
