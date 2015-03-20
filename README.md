@@ -20,12 +20,16 @@ This way, you can pack up several images with different file formats in a single
 
 The example files and a python script are in the [examples folder](https://github.com/keitakun/Magipack.js/tree/master/examples) so you can easily generate the pack and config file.
 
+### So what [Spritepack.js](https://github.com/madjidtaha/Spritepack.js) does better than [Magipack.js](https://github.com/keitakun/Magipack.js)?
+
+Spritepack.js bring to Magipack.js Javascript Module support (AMD, CommonJS), it also drop weird IE9 and lower support.
+
 
 Browser compatibility
 ---------------------
 This examples were tested in Chrome 32, IE10, Safari 7, Firefox 25, Safari iOS 7.
 
-Spritepack.js drop support of browser how don't support [blob](http://caniuse.com/#search=blob) (IE 9 and lower) 
+Spritepack.js need browser support of [blob](http://caniuse.com/#search=blob) to work.
 
 There wasn't any large scale testing for this project yet, so if you find any [issue, please report it](https://github.com/madjidtaha/Spritepack.js/issues).
 
