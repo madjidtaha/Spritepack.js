@@ -33,7 +33,11 @@ Spritepack.js need browser support of [blob](http://caniuse.com/#search=blob) to
 
 There wasn't any large scale testing for this project yet, so if you find any [issue, please report it](https://github.com/madjidtaha/Spritepack.js/issues).
 
+Installation
+============
 
+- npm : `npm install -S spritepack.js`
+- bower : `bower install -S spritepack.js`
 
 Examples
 ========
