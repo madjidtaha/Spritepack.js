@@ -15,28 +15,19 @@
  **/
 
 (function(global) {
+
 	window.URL = window.URL || window.webkitURL || window.mozURL || window.msURL;
 	Spritepack.isIE = Boolean(document.all);
 	var hasBlob = false;
-	try{
+	try {
 		hasBlob = Boolean(Blob);
-	}catch(e)
-	{
-		hasBlob = false;
 	}
-	Spritepack.hasBlob = hasBlob;
-	Spritepack.version = '1.0.0';
-	if(!Spritepack.hasBlob)
-	{
+	catch(e) {
 		throw new Error('Spritepack need blob support to work.') 
-		
 	}
 
-	function req()
-	{
-		if(window.XMLHttpRequest) return new XMLHttpRequest()
-		if(window.ActiveXObject) return new ActiveXObject("MSXML2.XMLHTTP.3.0")
-	}
+	Spritepack.hasBlob = hasBlob;
+	Spritepack.version = '1.0.0';
 
 	function Spritepack(pack, config) {
 		this.progress = 0
@@ -48,33 +39,33 @@
 
 	Spritepack.prototype._onProgress = function(e)
 	{
-		p = e.position / e.totalSize;
+		if (e.loaded && e.total) {
+			p = e.loaded / e.total;
+		}
+		else {
+			p = e.position / e.totalSize;
+		}
+		
 		if(isNaN(p)) p = 0;
-		if(this._configComplete)
-		{
+		if(this._configComplete) {
 			p = p * 0.9 + 0.1;
-		}else{
+		} else {
 			p *= 0.1;
 		}
+
 		this.progress = p;
 		if(this.onProgress) this.onProgress(p, 1);
 	}
 
 	Spritepack.prototype._loadFile = function(path, callback, type)
 	{
-		var xhr = req();
-		if(!type)
-		{
+		var xhr = new XMLHttpRequest();
+		if(!type) {
 			type = 'arraybuffer';
-			try{
-				if(Blob.prototype.slice)
-				{
-					type = 'blob';
-				}
-			}catch(e)
-			{
-
+			try {
+				if(Blob.prototype.slice) type = 'blob';
 			}
+			catch(e) { }
 		}
 
 		xhr.open('GET', path, true);
@@ -82,8 +73,7 @@
 		xhr.responseType = type;
 		var _callback = callback;
 		var _this = this;
-		xhr.onprogress = function(e)
-		{
+		xhr.onprogress = function(e) {
 			_this._onProgress(e)
 		}
 		xhr.onreadystatechange = function(e) {
@@ -96,78 +86,63 @@
 		xhr.send(null);
 	}
 
-	Spritepack.prototype._configLoaded = function(e)
-	{
+	Spritepack.prototype._configLoaded = function(e) {
 		this._configComplete = true;
 		this.config = eval('(' + e.responseText + ')');
 		this._loadFile(this.pack, this._packLoaded);
 	}
 
-	Spritepack.prototype._packLoaded = function(e)
-	{
+	Spritepack.prototype._packLoaded = function(e) {
 		
 		this.init(e.response, this.config);
-
-		if(this.onLoadComplete)
-		{
-			this.onLoadComplete(this);
-		}
+		if(this.onLoadComplete) this.onLoadComplete(this);
 	}
 
-	Spritepack.prototype._findFile = function(name)
-	{
+	Spritepack.prototype._findFile = function(name) {
 		var i;
 		i = this.config.length;
-		while (i-- > 0)
-		{
-			if(this.config[i][0] == name)
-			{
-				return this.config[i];
-			}
+		while (i-- > 0) {
+			if(this.config[i][0] == name) return this.config[i];
 		}
 		while (i-- > 0) {
-			if (name.indexOf(this.config[i][0]) >= 0) {
-				return this.config[i];
-			}
+			if (name.indexOf(this.config[i][0]) >= 0) return this.config[i];
 		}
 	}
 
-	Spritepack.prototype._getRange = function(i, e, type)
-	{
+	Spritepack.prototype._getRange = function(i, e, type) {
 		var b;
-		if(this.blob.slice)
-		{
-			b = this.blob.slice(i, e, type);
-			return window.URL.createObjectURL(b);
-		}else if (this.blob.webkitSlice)
-		{
-			b = this.blob.webkitSlice(i, e, type);
-			return window.URL.createObjectURL(b);
-		}else if(this.blob.mozSlice)
-		{
-			b = this.blob.mozSlice(i, e, type);
-			return window.URL.createObjectURL(b);
-		}
-	}
-
-	Spritepack.prototype.init = function(pack, config)
-	{
-		this.config = config;
-		if(pack != null)
-		{
 		
+		if(this.blob.slice) {
+
+			b = this.blob.slice(i, e, type);
+		
+		} else if (this.blob.webkitSlice) {
+
+			b = this.blob.webkitSlice(i, e, type);
+		
+		} else if(this.blob.mozSlice) {
+		
+			b = this.blob.mozSlice(i, e, type);
+		
+		}
+
+		return window.URL.createObjectURL(b);
+	}
+
+	Spritepack.prototype.init = function(pack, config) {
+		this.config = config;
+
+		if(pack != null) {
 			this.blob = new Blob([pack])
-			
 		}
 	}
 
-	Spritepack.prototype.load = function(pack, config)
-	{
+	Spritepack.prototype.load = function(pack, config) {
 		this.pack = pack;
-		if(config)
-		{
+		if(config) {
 			this._loadFile(config, this._configLoaded, 'text');
-		}else{
+		}
+		else {
 			this._loadFile(pack, this._packLoaded);
 		}
 	}
@@ -179,8 +154,7 @@
 
 		var type;
 
-		if(!isNaN(arguments[0]) && !isNaN(arguments[1]))
-		{
+		if(!isNaN(arguments[0]) && !isNaN(arguments[1])) {
 			type = arguments[2];
 			if(!type) type = 'text/plain';
 			return this._getRange(arguments[0], arguments[1], type);
@@ -197,8 +171,7 @@
 	Spritepack.init = function(pack, config) {
 		if(this.inited) throw new Error('Spritepack static instance already initialized.');
 		this._instance = new Spritepack(pack, config);
-		if(pack)
-		{
+		if(pack) {
 			this._instance.init(pack, config);
 		}
 		this.inited = true;
@@ -210,8 +183,7 @@
 		this._instance.load(pack, config);
 	};
 
-	Spritepack.getURI = function()
-	{
+	Spritepack.getURI = function() {
 		return this._instance.getURI.apply(this._instance, arguments);
 	}
 
@@ -230,6 +202,5 @@
 	  	global.Spritepack = Spritepack;
 	
 	}
-
 
 })(this);
