@@ -27,7 +27,7 @@
 	}
 
 	Spritepack.hasBlob = hasBlob;
-	Spritepack.version = '1.0.0';
+	Spritepack.version = '1.0.0-beta';
 
 	function Spritepack(pack, config) {
 		this.progress = 0

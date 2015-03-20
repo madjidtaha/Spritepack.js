@@ -1,7 +1,7 @@
 {
   "name": "spritepack.js",
   "namespace": "spritepack.js",
-  "version": "1.0.0",
+  "version": "1.0.0-beta",
   "description": "Spritepack.js is a Javascript code that will help minimize HTTP requests",
   "main": "src/Spritepack.js",
   "directories": {
