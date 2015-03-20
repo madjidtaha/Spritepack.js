@@ -18,7 +18,7 @@ It loads a single file which is a concatenation of binary data of the files you 
 
 This way, you can pack up several images with different file formats in a single file without losing compression or metadatas.
 
-The example files and a python script are in the [examples folder](https://github.com/keitakun/Magipack.js/tree/master/examples) so you can easily generate the pack and config file.
+The example files and a python script are in the [examples folder](https://github.com/madjidtaha/Spritepack.js/tree/master/examples) so you can easily generate the pack and config file.
 
 ### So what [Spritepack.js](https://github.com/madjidtaha/Spritepack.js) does better than [Magipack.js](https://github.com/keitakun/Magipack.js)?
 
@@ -38,38 +38,40 @@ There wasn't any large scale testing for this project yet, so if you find any [i
 Examples
 ========
 
-[example1-static.html](http://hellokeita.in/xp/Magipack.js/example1-static.html)
+[example1-static.html](http://madj.me/lib/Spritepack.js/examples/example1-static.html)
 
-[example2-instance.html](http://hellokeita.in/xp/Magipack.js/example2-instance.html)
+[example2-instance.html](http://madj.me/lib/Spritepack.js/examples/example2-instance.html)
 
-[example3-preloadjs.html](http://hellokeita.in/xp/Magipack.js/example3-preloadjs.html)
+[example3-preloadjs.html](http://madj.me/lib/Spritepack.js/examples/example3-preloadjs.html)
+
+[example4-browserify.html](http://madj.me/lib/Spritepack.js/examples/example4-browserify.html)
 
 ### Using as static class
 ```javascript
-Magipack.init();
-Magipack.onLoadComplete = function()
+Spritepack.init();
+Spritepack.onLoadComplete = function()
 {
-	document.getElementById("i1").src = Magipack.getURI('forkit.gif');
-	document.getElementById("i2").src = Magipack.getURI('mario.jpg');
-	document.getElementById("i3").src = Magipack.getURI('Smile.png');
-	document.getElementById("container").style.backgroundImage = 'url(' + Magipack.getURI('packman_ghost.gif') + ')';
+	document.getElementById("i1").src = Spritepack.getURI('forkit.gif');
+	document.getElementById("i2").src = Spritepack.getURI('mario.jpg');
+	document.getElementById("i3").src = Spritepack.getURI('Smile.png');
+	document.getElementById("container").style.backgroundImage = 'url(' + Spritepack.getURI('packman_ghost.gif') + ')';
 }
 
-Magipack.load('images.pack', 'images.json');
+Spritepack.load('images.pack', 'images.json');
 ```
 
 ### Using as an instance
 ```javascript
-var mp = new Magipack();
-mp.onLoadComplete = function()
+var sp = new Spritepack();
+sp.onLoadComplete = function()
 {
 	// Here you can use either the instance you created or `this` scope.
 	document.getElementById("i1").src = this.getURI('forkit.gif');
-	document.getElementById("i2").src = mp.getURI('mario.jpg');
-	document.getElementById("i3").src = mp.getURI('Smile.png');
-	document.getElementById("container").style.backgroundImage = 'url(' + mp.getURI('packman_ghost.gif') + ')';
+	document.getElementById("i2").src = sp.getURI('mario.jpg');
+	document.getElementById("i3").src = sp.getURI('Smile.png');
+	document.getElementById("container").style.backgroundImage = 'url(' + sp.getURI('packman_ghost.gif') + ')';
 }
-mp.load('images.pack', 'images.json');
+sp.load('images.pack', 'images.json');
 ```
 
 ### Using with [Preload.js](http://www.createjs.com/#!/PreloadJS)
@@ -81,12 +83,36 @@ queue.loadManifest([
 	{id: "config", src:"images.json"},
 ]);
 function handleComplete() {
-	var mp = new Magipack(queue.getResult('image'), queue.getResult('config'));
-	document.getElementById("i1").src = mp.getURI('forkit.gif');
-	document.getElementById("i2").src = mp.getURI('mario.jpg');
-	document.getElementById("i3").src = mp.getURI('Smile.png');
-	document.getElementById("container").style.backgroundImage = 'url(' + mp.getURI('packman_ghost.gif') + ')';
+	var sp = new Spritepack(queue.getResult('image'), queue.getResult('config'));
+	document.getElementById("i1").src = sp.getURI('forkit.gif');
+	document.getElementById("i2").src = sp.getURI('mario.jpg');
+	document.getElementById("i3").src = sp.getURI('Smile.png');
+	document.getElementById("container").style.backgroundImage = 'url(' + sp.getURI('packman_ghost.gif') + ')';
 }
+```
+
+### Using with [Browserify.js](http://browserify.org/)
+``` javascript
+var Spritepack = require('spritepack.js');
+
+function App() {
+  console.log('app initialized');
+
+  var sp = new Spritepack();
+  sp.load('images.pack', 'images.json');
+
+  sp.onLoadComplete = function() {
+
+    document.getElementById("i1").src = sp.getURI('forkit.gif');
+    document.getElementById("i2").src = sp.getURI('mario.jpg');
+    document.getElementById("i3").src = sp.getURI('Smile.png');
+    document.getElementById("container").style.backgroundImage = 'url(' + sp.getURI('packman_ghost.gif') + ')';
+
+  }
+
+}
+
+module.exports = App;
 ```
 
 ### Packing images with packImages.py
@@ -101,3 +127,25 @@ Then run it:
 ```
 
 Both `path` and `output` are optional parameters and it will fallback to the same directory as the *packImages.py* script.
+
+
+Planned features
+========================
+
+- Port packImages to Javascript
+- Make a gulp plugins to easily use Spritepack.js in your workflow
+- Make a [vue.js](http://vuejs.org) custom directive to set source of an image from the DOM
+
+Credits
+=======
+
+- [Keita Kuroki](https://github.com/keitakun) for [Magipack.js](https://github.com/keitakun/Magipack.js)
+- [Danilo Figueiredo](https://github.com/grifotv)
+- [Lucas Motta](https://github.com/lucasmotta)
+- [Arthur Muchir](https://github.com/arthurmuchir)
+- [Madjid Taha](https://madj.me)
+
+License
+=======
+
+[The MIT License (MIT)](http://opensource.org/licenses/MIT)
