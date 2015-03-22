@@ -137,7 +137,7 @@ Planned features
 ========================
 
 - Port packImages to Javascript
-- Make a gulp plugins to easily use Spritepack.js in your workflow
+- Make a gulp plugin to easily use Spritepack.js in your workflow
 - Make a [vue.js](http://vuejs.org) custom directive to set source of an image from the DOM
 
 Credits
