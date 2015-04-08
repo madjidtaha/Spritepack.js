@@ -1,6 +1,8 @@
 Spritepack.js
 ===========
 
+[![Join the chat at https://gitter.im/madjidtaha/Spritepack.js](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/madjidtaha/Spritepack.js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [Spritepack.js](https://github.com/madjidtaha/Spritepack.js) is a Javascript code that will help minimize HTTP requests.
 Spritepack.js is a fork of [Magipack.js](https://github.com/keitakun/Magipack.js)
 
